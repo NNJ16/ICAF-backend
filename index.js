@@ -23,7 +23,6 @@ app.use("/research", ResearchAPI());
 app.use("/workshop", WorkshopAPI());
 app.use("/attendee", AttendeeAPI());
 app.use("/user", UserAPI());
-app.use("/conference", ConferenceAPI());
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);

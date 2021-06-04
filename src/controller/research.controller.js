@@ -1,21 +1,4 @@
 const Research = require("../model/research.model");
-const multer = require("multer");
-
-const fileStorageEngine = multer.diskStorage({
-    destination: (req,file,cb)=>{
-        cb(null,"./files");
-    },
-    filename:(req,file,cb)=>{
-        cb(null,Date.now()+"--"+file.originalname);
-    }
-});
-
-const upload = multer({storage:fileStorageEngine})
-
-// ResearchController.post("/upload",upload.single("image"),(req, res)=>{
-//     console.log(req.file);
-//     res.send("file upload success");
-// });
 
 //create research | user
 const createResearch = async (req,res)=>{
@@ -39,7 +22,6 @@ const getAllResearches = async (req, res) => {
 
 //update research with id
 const updateResearch = async (req,res)=>{
-    console.log(req.body);
     if(req.body){
         let id = req.body._id;
         await Research.findByIdAndUpdate(id,req.body)
