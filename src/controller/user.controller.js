@@ -3,18 +3,28 @@ const User = require("../model/user.model");
 //Register a User | guest
 const createUser = async (req,res)=>{
     if(req.body){
-        const user = new User(req.body);
-        await user.save()
-            .then(data=>res.status(200).send({data:data}))
-            .catch(err=>res.send(err));
+        let email = req.body.email;
+        await User.findOne({email:email},async (err,result)=>{
+            if(err){
+                console.log(err);
+            }else{
+                if(!result){
+                    const user = new User(req.body);
+                    await user.save()
+                        .then(data=>res.status(200).send(data))
+                        .catch(err=>res.send(err));
+                }else{
+                    res.send({message:"User Already Exist"});
+                }
+            }
+        });
     }
 }
 
 //login Validate
 const validateUser = async (req,res)=>{
     let email = req.body.email;
-    let pwd = req.body.password;
-     await User.findOne({email:email,password:pwd},(err,result)=>{
+     await User.findOne({email:email},(err,result)=>{
         if(err){
             console.log(err);
         }else{
