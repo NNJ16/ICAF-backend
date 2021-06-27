@@ -45,6 +45,19 @@ const createResearch = async (req,res)=>{
         }
     }
 }
+//approve or reject research details | reviewer
+const updateApprovalStatus = async (req,res)=>{
+    if(req.body) {
+        let id = req.body.id;
+        let status = req.body.status;
+        await Research.findByIdAndUpdate(id,{approvalStatus:status})
+            .then((result)=>{
+                res.status(200).send(result);
+            })
+            .catch(err=>console.log(err))
+    }
+}
+
 //get All Researches
 const getAllResearches = async (req, res) => {
     await Research.find({})
@@ -66,6 +79,7 @@ const getResearchesFromID = async (req, res) => {
         }
     })
 };
+
 const updatePaymentStatus = async (req,res)=>{
     if(req.params.id){
         await Research.findByIdAndUpdate(req.params.id,{paymentStatus:"paid"})
@@ -75,6 +89,7 @@ const updatePaymentStatus = async (req,res)=>{
             .catch(err=>console.log(err))
     }
 }
+
 //update research with id
 const updateResearch = async (req,res)=>{
     if(req.body){
@@ -134,5 +149,6 @@ module.exports = {
     getResearchesFromID,
     deleteResearch,
     updateResearch,
-    updatePaymentStatus
+    updatePaymentStatus,
+    updateApprovalStatus
 }

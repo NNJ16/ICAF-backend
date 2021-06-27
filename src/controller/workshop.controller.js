@@ -22,6 +22,19 @@ const downloadProposal = async (req,res)=>{
     res.sendFile(file);
 }
 
+//approve or reject workshop details | reviewer
+const updateApprovalStatus = async (req,res)=>{
+    if(req.body) {
+        let id = req.body.id;
+        let status = req.body.status;
+        await Workshop.findByIdAndUpdate(id,{approvalStatus:status})
+            .then((result)=>{
+                res.status(200).send(result);
+            })
+            .catch(err=>console.log(err))
+    }
+}
+
 //Create a WorkShop
 const createWorkshop = async (req,res)=>{
     if(req.body){
@@ -45,6 +58,7 @@ const createWorkshop = async (req,res)=>{
         }
     }
 }
+
 //get All Workshops
 const getAllWorkshops = async (req, res) => {
     await Workshop.find()
@@ -55,6 +69,7 @@ const getAllWorkshops = async (req, res) => {
             res.send(error);
         });
 }
+
 //get workshops with userID
 const getWorkshopsFromID = async (req, res) => {
     await Workshop.find({'submitter.userId': req.params.id},(err,result)=>{
@@ -65,6 +80,7 @@ const getWorkshopsFromID = async (req, res) => {
         }
     })
 };
+
 //update research with id
 const updateWorkshop = async (req,res)=>{
     if(req.body){
@@ -95,6 +111,7 @@ const updateWorkshop = async (req,res)=>{
         }
     }
 }
+
 //delete Research
 const deleteWorkshop = async (req, res) => {
     if (req.params.id) {
@@ -122,5 +139,6 @@ module.exports = {
     getWorkshopsFromID,
     getAllWorkshops,
     deleteWorkshop,
-    updateWorkshop
+    updateWorkshop,
+    updateApprovalStatus
 }

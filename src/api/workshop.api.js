@@ -15,12 +15,14 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({storage:fileStorageEngine})
 
 module.exports = function (){
-    router.get('/', WorkshopController.getAllWorkshops);
     router.get('/:id', WorkshopController.getWorkshopsFromID);
     router.post('/upload', upload.single("file"),WorkshopController.uploadProposal);
     router.get('/download/:id', WorkshopController.downloadProposal);
     router.post('/create', WorkshopController.createWorkshop);
     router.put('/update', WorkshopController.updateWorkshop);
     router.delete('/delete/:id', WorkshopController.deleteWorkshop);
+
+    router.get('/', WorkshopController.getAllWorkshops);
+    router.patch('/update/status', WorkshopController.updateApprovalStatus);
     return router;
 }
