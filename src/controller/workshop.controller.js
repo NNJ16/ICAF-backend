@@ -57,7 +57,6 @@ const getAllWorkshops = async (req, res) => {
 }
 //get workshops with userID
 const getWorkshopsFromID = async (req, res) => {
-    console.log(req.params.id)
     await Workshop.find({'submitter.userId': req.params.id},(err,result)=>{
         if(err){
             console.log(err);
