@@ -14,7 +14,6 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({storage:fileStorageEngine})
 
 module.exports = function (){
-    router.get('/', ResearchController.getAllResearches);
     router.get('/:id', ResearchController.getResearchesFromID);
     router.post('/upload', upload.single("file"),ResearchController.uploadProposal);
     router.get('/download/:id', ResearchController.downloadProposal);
@@ -22,6 +21,9 @@ module.exports = function (){
     router.delete('/delete/:id',ResearchController.deleteResearch);
     router.put('/update',ResearchController.updateResearch);
     router.patch('/update/payment/:id',ResearchController.updatePaymentStatus);
+
+    router.get('/', ResearchController.getAllResearches);
+    router.patch('/update/status', ResearchController.updateApprovalStatus);
     return router;
 }
 
