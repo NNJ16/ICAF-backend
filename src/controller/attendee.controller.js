@@ -2,7 +2,6 @@ const Attendee = require("../model/attendee.model");
 
 //Register as a Attendee | User
 const createAttendee = async (req, res) => {
-    console.log(req.body);
     if (req.body) {
         const attendee = new Attendee(req.body);
         await attendee.save()
