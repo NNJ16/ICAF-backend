@@ -7,12 +7,15 @@ let filename = "";
 
 //upload proposal file
 const uploadProposal = (req,res)=>{
+    
     if(req.file){
         filePath = req.file.path;
         filename = req.file.filename;
+        
     }else{
         filePath="";
         filename="";
+        
     }
 }
 
@@ -48,6 +51,7 @@ const createWorkshop = async (req,res)=>{
                 submitDate : new Date(),
                 submitter : req.body.submitter
             }
+            
             const workshop = new Workshop(data);
             filename="";
             await workshop.save()
